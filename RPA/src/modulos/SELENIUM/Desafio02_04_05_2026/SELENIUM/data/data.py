@@ -1,0 +1,61 @@
+user_infos = {
+    'name': 'Levi',
+    'signup-email': 'levicavalcante07@hotmail.com',
+    'login-email': 'levicavalcante07@hotmail.com',
+    'signup-password': 'levijr08',
+    'login-password': 'levijr08',
+    'first-name': 'Levi',
+    'last-name': 'Levi Claudiano Cavalcante',
+    'gender': 'Mr.',
+    'birth-day': '4', 
+    'birth-month': 'July',
+    'birth-year': '2007',
+    'newsletter': '',
+    'offers': '',
+    'company': 'fpftech',
+    'address': 'Av. Gov. Danilo de Matos Areosa, 1170 - Distrito Industrial I, Manaus - AM, 69075-351, Brasil"',
+    'address-2': 'R. Javarí, 1004 - Distrito Industrial I, Manaus - AM, 69075-110',
+    'country': 'United States',
+    'state': 'West Virginia',
+    'city': 'Charleston',
+    'zipcode': '25301',
+    'mobile-number': '+1 304-555-1234'
+}
+
+user_selectors = {
+    'name' : 'input[data-qa="signup-name"]',
+    'signup-email' : 'input[data-qa="signup-email"]',
+    'login-email' : 'input[data-qa="login-email"]',
+    'signup-password' : 'input[data-qa="password"]',
+    'login-password': 'input[data-qa="login-password"]',
+    'first-name' : 'input[data-qa="first_name"]',
+    'last-name' : 'input[data-qa="last_name"]',
+    'gender' : 'input[id="id_gender1"]',
+    'birth-day' : 'select[data-qa="days"]',
+    'birth-month' : 'select[data-qa="months"]',
+    'birth-year' : 'select[data-qa="years"]',
+    'newsletter': 'input[id="newsletter"]',
+    'offers': 'input[id="optin"]',
+    'company' : 'input[data-qa="company"]',
+    'address' : 'input[data-qa="address"]',
+    'address-2' : 'input[data-qa="address2"]',
+    'country' : 'select[data-qa="country"]',
+    'state' : 'input[data-qa="state"]',
+    'city' : 'input[data-qa="city"]',
+    'zipcode' : 'input[data-qa="zipcode"]',
+    'mobile-number' : 'input[data-qa="mobile_number"]'
+}
+
+buttons_selectors = {
+    'login-signup' : 'a[href="/login"]',
+    'signup' : 'button[data-qa="signup-button"]',
+    'login' : 'button[data-qa="login-button"]',
+    'create-account' : 'button[data-qa="create-account"]',
+    'continue-created-account' : 'a[data-qa="continue-button"]',    
+    'confirmed-login': 'li:nth-child(10) > a > i',
+    'failed-login' : '#form > div > div > div.col-sm-4.col-sm-offset-1 > div > form > p',
+    'sucess-pre-signup' : '#form > div > div > div > div > h2 > b',
+    'failed-pre-signup' : '#form > div > div > div:nth-child(3) > div > form > p',
+    'delete-account' : 'a[href="/delete_account"]',
+    'confirmed-delete' : 'h2[data-qa="account-deleted"]'
+}

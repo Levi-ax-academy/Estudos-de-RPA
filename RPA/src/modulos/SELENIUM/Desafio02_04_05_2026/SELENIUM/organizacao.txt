@@ -1,0 +1,10 @@
+Pra fazer:
+
+1 - Entrar no site
+2 - Abrir login
+3 - Testar se existe conta
+4 - Testar condição:
+    -SE existe: fazer login
+    -SE não existe: prosseguir pra criar a conta
+5 - Criar conta ou fazer login
+6 - Fechar site retornando logs e/ou debugs
