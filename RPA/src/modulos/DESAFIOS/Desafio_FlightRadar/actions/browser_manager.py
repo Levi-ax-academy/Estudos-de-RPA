@@ -1,8 +1,9 @@
 from playwright.sync_api import Playwright
-from RPA.src.modulos.DESAFIOS.Desafio_FlightRadar.data_assets.mock import selectors as sel
+from src.modulos.DESAFIOS.Desafio_FlightRadar.data_assets.mock import selectors as sel
 import pyautogui as pyag
 import os
 from dotenv import load_dotenv
+from time import sleep
 class BrowserManager:
     def __init__(self, playwright: Playwright):
         self.browser = playwright.chromium.launch(
@@ -13,28 +14,33 @@ class BrowserManager:
         )
         
         self.context = self.browser.new_context()
+        if os.path.exists("state.json"):
+            self.context.set_storage_state("state.json")
+
         self.page = self.context.new_page()
         self.page.goto(sel["URL"], wait_until="domcontentloaded")
         try:
-            self.page.locator(sel["AGREE_COOKIES"]).click()
-            self.page.locator(sel["CLOSE_POPUP"]).click()
+            self.page.locator(sel["AGREE_COOKIES"]).is_visible(timeout=5000)
+            self.page.locator(sel["AGREE_COOKIES"]).click(timeout=5000)
+            self.page.locator(sel["CLOSE_POPUP"]).is_visible(timeout=5000)
+            self.page.get_by_role("button", name="Close").click()
         except:
             print("Popups não encontrados ou já fechados.")
             
         self.page.wait_for_timeout(3000)
     
     def login(self):
-        load_dotenv()
-        self.email = os.getenv("EMAIL")
-        self.senha = os.getenv("PASSWORD")
-        self.page.locator(sel["LOGIN"]).click()
-        self.page.locator(sel["GOOGLE_LOGIN"]).click()
-        
-        self.page.locator(sel["email_input"]).wait_for(state="visible")
-        self.page.locator(sel["email_input"]).fill(self.email)
-        self.page.locator(sel["email_input"]).press("Enter")
-        
-        self.page.locator(sel["password_input"]).wait_for(state="visible")
-        self.page.locator(sel["password_input"]).fill(self.senha)
-        self.page.locator(sel["password_input"]).press("Enter")
-        self.context.storage_state(path="state.json")
+        if os.path.exists("state.json"):
+            print("Sessão já autenticada. Pulando login.")
+            pass
+        if not os.path.exists("state.json"):
+            load_dotenv()
+            self.email = os.getenv("EMAIL")
+            self.senha = os.getenv("PASSWORD")
+            self.page.locator(sel["LOGIN"]).click()        
+            self.page.locator(sel["email_input"]).wait_for(state="visible")
+            self.page.locator(sel["email_input"]).fill(self.email)
+            self.page.locator(sel["password_input"]).fill(self.senha)
+            self.page.locator(sel["password_input"]).press("Enter")
+            sleep(10)
+            self.context.storage_state(path="state.json")
