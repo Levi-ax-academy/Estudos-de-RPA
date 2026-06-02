@@ -21,6 +21,6 @@ selectors = {
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 images_path = {
-    "aviao": os.path.join(BASE_DIR, "aviao2_transparent.png"),
-    "helicoptero": os.path.join(BASE_DIR, "helicoptero2_transparent.png")
+    "aviao": os.path.join(BASE_DIR, "asset_aviao_transparent.png"),
+    "helicoptero": os.path.join(BASE_DIR, "asset_helicopter_transparent.png")
 }

@@ -6,10 +6,9 @@ def main():
         fr = FR(p)
         fr.bm.login()
         fr.Apply_filters()
-        sleep(30)
-        fr.Check_Planes_Helicopters()
+        fr.Check_Planes()
+        fr.Check_Helicopters()
         sleep(15)
-        fr.Scrap_Flight_Infos()
 
 if __name__ == "__main__":
     main()
