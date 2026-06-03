@@ -60,6 +60,18 @@ class FlightRadar:
         if uid:
             self.seen_ids.add(uid)
 
+    def _close_ad_popup(self):
+        try:
+            popup = self.page.locator(sel["close_ad_popup"])
+            if popup.is_visible(timeout=1000):
+                popup.click()
+                print("Fechando popup de anuncio")
+                self.page.wait_for_timeout(500)
+                return True
+        except Exception:
+            pass
+        return False
+
     def Apply_filters(self):
         self.page.locator(sel["SETTINGS"]).wait_for(state="visible")
         self.page.locator(sel["SETTINGS"]).click()
@@ -78,6 +90,7 @@ class FlightRadar:
         region_plane = (25,120,1180,880)
         self.page.goto("https://www.flightradar24.com/39.67,-3.82/8")
         while found_planes < max_planes and attempts < max_attempts:
+            self._close_ad_popup()
             try:
                 planes_center = self._find_next_center(ipath["aviao"], excluded, region_plane, confidence=0.7)
             except Exception as e:
@@ -96,11 +109,13 @@ class FlightRadar:
                 continue
 
             pyag.moveTo(planes_center[0], planes_center[1])
+            self._close_ad_popup()
             pyag.click()
             sleep(5)
+            self._close_ad_popup()
             if self.page.locator(sel["fly_number"]).is_visible() or self.page.locator(sel["fly_code"]).is_visible():
                 print("Painel aberto: coletando informações do avião...")
-                which_plane = f"aviao{found_planes}.png"
+                which_plane = f"aviao{found_planes+1}.png"
                 flight_info = self.Scrap_Flight_Infos(airplane_type="aviao", which_airplane=which_plane, save=False)
                 valid_fields = self._count_valid_fields(flight_info)
                 print(f"Campos válidos: {valid_fields}/5")
@@ -150,6 +165,7 @@ class FlightRadar:
 
         sleep(10)
         while found_helis < max_helis and attempts < max_attempts:
+            self._close_ad_popup()
             try:
                 helicopter_center = self._find_next_center(ipath["helicoptero"], excluded, region_heli, confidence=0.45)
             except Exception as e:
@@ -168,11 +184,13 @@ class FlightRadar:
                 sleep(0.5)
                 continue
             pyag.moveTo(helicopter_center[0], helicopter_center[1])
+            self._close_ad_popup()
             pyag.click()
             sleep(5)
+            self._close_ad_popup()
             if self.page.locator(sel["fly_number"]).is_visible() or self.page.locator(sel["fly_code"]).is_visible():
                 print("Painel aberto: coletando informações do helicóptero...")
-                which_heli = f"helicopteros{found_helis}.png"
+                which_heli = f"helicopteros{found_helis+1}.png"
                 flight_info = self.Scrap_Flight_Infos(airplane_type="helicoptero", which_airplane=which_heli, save=False)
                 valid_fields = self._count_valid_fields(flight_info)
                 print(f"Campos válidos: {valid_fields}/5")

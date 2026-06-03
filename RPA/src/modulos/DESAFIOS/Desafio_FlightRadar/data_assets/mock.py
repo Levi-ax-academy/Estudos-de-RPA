@@ -15,7 +15,8 @@ selectors = {
     "departure_city": "span[data-testid='aircraft-panel__airport-departure-city']",
     "arrival_city": "span[data-testid='aircraft-panel__airport-arrival-city']",
     "time_remaining": "span[data-testid='aircraft-panel__flight-time-remaining']",
-    "close_flight_info": "#app > div > div > div.flex.min-h-full.w-0.flex-1.flex-col.overflow-hidden.bg-white > main > div > div > div > div.absolute.flex.top-12.rounded-xl.mt-4.ml-4.z-40.lg\:top-0.w-84.overflow-hidden.shadow-default > div > header > div.flex.items-start.justify-between > button"
+    "close_flight_info": "#app > div > div > div.flex.min-h-full.w-0.flex-1.flex-col.overflow-hidden.bg-white > main > div > div > div > div.absolute.flex.top-12.rounded-xl.mt-4.ml-4.z-40.lg\:top-0.w-84.overflow-hidden.shadow-default > div > header > div.flex.items-start.justify-between > button",
+    "close_ad_popup": "#headlessui-dialog-panel-v-27-4 > div.absolute.right-0.top-0.z-10.pr-2.pt-2 > button"
 
 }
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))

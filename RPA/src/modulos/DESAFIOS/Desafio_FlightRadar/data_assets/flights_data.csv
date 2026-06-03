@@ -1,8 +1,0 @@
-Type,Flight Number,Flight Code,Departure City,Arrival City,Time Remaining
-aviao,TO4790,B738,PARIS,MALAGA,00:47
-aviao,IB756,A321,DUSSELDORF,MADRID,00:14
-aviao,FR5356,B38M,MADRID,KRAKOW,02:38
-aviao,V73513,A320,MALAGA,BILBAO,00:34
-aviao,U28004,A319,ALMERIA,LONDON,01:50
-helicoptero,,B429,POUSO ALEGRE,,
-helicoptero,,EC45,SAO PAULO,,
