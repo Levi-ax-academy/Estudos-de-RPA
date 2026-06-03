@@ -78,8 +78,17 @@ class FlightRadar:
         region_plane = (25,120,1180,880)
         self.page.goto("https://www.flightradar24.com/39.67,-3.82/8")
         while found_planes < max_planes and attempts < max_attempts:
-            planes_center = self._find_next_center(ipath["aviao"], excluded, region_plane, confidence=0.5)
+            try:
+                planes_center = self._find_next_center(ipath["aviao"], excluded, region_plane, confidence=0.7)
+            except Exception as e:
+                print(f"Erro ao encontrar avião: {e}")
+                if type(e).__name__ == "ImageNotFoundException":
+                    pyag.scroll(500)  # Tentar rolar a tela para encontrar novos aviões
+                    self.bm.navigate_on_screen(attempts=19)
+                
             print(f"Avião candidato encontrado: {planes_center}")
+            self.bm.navigate_on_screen(attempts)  # Tentar mover a tela para encontrar novos aviões a cada 10 tentativas
+            
             if not planes_center:
                 print("Nenhum novo candidato para avião encontrado no momento.")
                 attempts += 1
@@ -141,14 +150,23 @@ class FlightRadar:
 
         sleep(10)
         while found_helis < max_helis and attempts < max_attempts:
-            helicopter_center = self._find_next_center(ipath["helicoptero"], excluded, region_heli, confidence=0.4)
+            try:
+                helicopter_center = self._find_next_center(ipath["helicoptero"], excluded, region_heli, confidence=0.45)
+            except Exception as e:
+                print(f"Erro ao encontrar helicóptero: {e}")
+                if type(e).__name__ == "ImageNotFoundException":
+                    pyag.scroll(500)  # Tentar rolar a tela para encontrar novos helicópteros
+                    self.bm.navigate_on_screen(attempts=19)  # Tentar mover a tela para encontrar novos helicópteros a cada 10 tentativas
             print(f"Helicóptero candidato encontrado: {helicopter_center}")
+            if attempts in [4,14,24,34,44,54]:  # A cada 5 tentativas, tentar mover a tela para encontrar novos helicópteros
+                self.bm.navigate_on_screen(attempts+5)
+            if attempts in [9,19,29,39,49,59]:  # A cada 10 tentativas, tentar mover a tela para encontrar novos helicópteros
+                self.bm.navigate_on_screen(attempts)
             if not helicopter_center:
                 print("Nenhum novo candidato para helicóptero encontrado no momento.")
                 attempts += 1
                 sleep(0.5)
                 continue
-
             pyag.moveTo(helicopter_center[0], helicopter_center[1])
             pyag.click()
             sleep(5)

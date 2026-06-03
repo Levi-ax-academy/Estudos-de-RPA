@@ -44,3 +44,21 @@ class BrowserManager:
             self.page.locator(sel["password_input"]).press("Enter")
             sleep(10)
             self.context.storage_state(path="state.json")
+    
+    def navigate_on_screen(self, attempts):
+        match attempts:
+            case 9:
+                pyag.dragTo(250, 250, duration=0.5)
+            case 19:
+                pyag.dragTo(350, 350, duration=0.5)
+            case 29:
+                pyag.dragTo(450, 450, duration=0.5) 
+            case 39:
+                pyag.dragTo(550, 550, duration=0.5)
+            case 49:
+                pyag.dragTo(650, 650, duration=0.5)
+            case 59:
+                pyag.dragTo(750, 750, duration=0.5)
+            case default:
+                print("Tentativa não reconhecida.")
+                return

@@ -216,3 +216,25 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Other
+aviao0.png
+aviao1.png
+aviao2.png
+aviao3.png
+aviao4.png
+aviao5.png
+helicopteros0.png
+helicopteros1.png
+helicopteros2.png
+flight_info_aviao0.png
+flight_info_aviao1.png
+flight_info_aviao2.png
+flight_info_aviao3.png
+flight_info_aviao4.png
+flight_info_aviao5.png
+flight_info_helicopteros0.png
+flight_info_helicopteros1.png
+flight_info_helicopteros2.png
+flights_data.csv
+state.json
