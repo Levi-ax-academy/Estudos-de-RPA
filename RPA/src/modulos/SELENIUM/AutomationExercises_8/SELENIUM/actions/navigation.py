@@ -1,5 +1,5 @@
 from src.shared.browser import Browser as B
-from src.modulos.AutomationExercises_8.SOLID.data.data import selectors
+from src.modulos.SELENIUM.AutomationExercises_8.SELENIUM.data.data import selectors
 
 import logging
 

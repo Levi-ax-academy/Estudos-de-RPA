@@ -4,6 +4,7 @@ import pyautogui as pyag
 import os
 from dotenv import load_dotenv
 from time import sleep
+import pyautogui
 class BrowserManager:
     def __init__(self, playwright: Playwright):
         self.browser = playwright.chromium.launch(

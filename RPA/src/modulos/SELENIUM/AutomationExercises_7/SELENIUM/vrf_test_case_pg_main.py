@@ -1,4 +1,4 @@
-from src.modulos.AutomationExercises_7.SOLID.vrf_test_cases_pg import VTCP
+from src.modulos.SELENIUM.AutomationExercises_7.SELENIUM.vrf_test_cases_pg import VTCP
 def main():
     vtcp = VTCP()
 
