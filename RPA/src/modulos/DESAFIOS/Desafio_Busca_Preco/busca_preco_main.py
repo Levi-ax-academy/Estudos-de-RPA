@@ -2,8 +2,13 @@ from playwright.sync_api import sync_playwright
 import csv
 import os
 from time import sleep
+from bs4 import BeautifulSoup
 import pyautogui
-partial_file_path = "C:\\Users\\levi1.cavalcante\\Estudos-de-RPA\\RPA\\src\\modulos\\DESAFIOS\\Desafio_Busca_Preco\\data"
+import requests
+URL = "https://buscapreco.sefaz.am.gov.br/home"
+response = requests.get(URL)
+soup = BeautifulSoup(response.content, 'html.parser')
+partial_file_path = "C:\\Users\\levi1.cavalcante\\workspace\\Estudos-de-RPA\\RPA\\src\\modulos\\DESAFIOS\\Desafio_Busca_Preco\\data"
 file_path = os.path.join(partial_file_path, 'lista_de_compras.csv')
 items = []
 items_filtred = []
@@ -25,34 +30,37 @@ with sync_playwright() as p:
         )
     context = browser.new_context()
     page = context.new_page()
-    page.goto("https://buscapreco.sefaz.am.gov.br/home")
+    page.goto(URL)
     for i in range(len(items_filtred)):
+        item_found = True
         item = items_filtred[i]
         page.locator("id=descricaoProd").first.fill(item)
         page.locator("id=descricaoProd").first.press("Enter")
-        page.wait_for_load_state()
+        page.wait_for_load_state("networkidle")
+        try:
+            page.wait_for_selector(".tb-valor-25", timeout=10000)
+        except:
+            print(f"Produto '{item}' não encontrado.")
+            item_found = False
+            pass
         data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)),"data")
         pyautogui.screenshot(imageFilename=os.path.join(data_dir,"preco.png"))
         sleep(2)
         precos = []
-        for j in range(12):
-            match j:
-                case 0: k = 1
-                case 1: k = 4
-                case 2: k = 7
-                case 3: k = 10
-                case 4: k = 13
-                case 5: k = 16
-                case 6: k = 19
-                case 7: k = 22
-                case 8: k = 25
-                case 9: k = 28
-                case 10: k = 31
-                case 11: k = 34
-                case _:
-                    k = None
-
-            locator = page.locator(f"xpath=/html/body/main/div[3]/div[1]/div[{k}]/div/div[2]/p[1]")
-            text = locator.inner_text()
-            precos.append(text)
-        print(precos)
+        html = page.content()
+        soup_page = BeautifulSoup(html, 'html.parser')
+        produtos = soup_page.select("body > main > div:nth-child(3) > div:nth-child(1)")
+        if not produtos:
+            produtos = soup_page.select(".row")
+        for produto in produtos:
+            cards = produto.select(".col.s12.m4")
+            for card in cards:
+                preco = card.select_one(".tb-valor-25.indigo-text.text-darken-4.padding10")
+                if preco is None:
+                    preco = card.select_one(".tb-valor-25")
+                if preco is None:
+                    continue
+                text = preco.get_text(strip=True)
+                precos.append(text)
+        if item_found: print(precos, " - - - ", item)
+        sleep(3)
